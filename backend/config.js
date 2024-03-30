@@ -4,5 +4,5 @@ module.exports={
 
 //OR
 
-// const JWT_SECRET="oOne-Piece-is-real"
+// const JWT_SECRET="One-Piece-is-real"
 // module.exports=JWT_SECRET;
