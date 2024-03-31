@@ -1,19 +1,20 @@
 const express=require('express');
 
-const { User } = require('../db');
-const { JWT_SECRET } = require('../config');
-const { jwt }=require('jsonwebtoken');
-const { zod }=require('zod');
-const { authMiddleware } = require('../middleware');
 const router=express.Router();
+const zod=require("zod");
+const { User , Account} = require('../db');
+const jwt=require('jsonwebtoken');
+const { JWT_SECRET } = require('../config');
+const { authMiddleware } = require('../middleware');
+
 
 //singup and signin routes
 
-const signupSchema=zod.object({
-    usename:zod.string().email(),
-    password:zod.string(),
-    firstName:zod.string(),
-    lastName:zod.string(),
+const signupSchema = zod.object({
+    username: zod.string().email(),
+    password: zod.string(),
+    firstName: zod.string(),
+    lastName: zod.string()
 })
 
 router.post("/signup",async (req,res)=>{
@@ -27,9 +28,10 @@ router.post("/signup",async (req,res)=>{
     
     const existinguser=await User.findOne({
         username:body.username
+      
     })
 
-    if(existinguser._id){
+    if(existinguser){
         return res.status(411).json({
             message:"Email already taken / Incorrect inputs"
         })
@@ -43,6 +45,14 @@ router.post("/signup",async (req,res)=>{
     //     firstName: body.firstName,
     //     lastName: body.lastName,
     // });
+    const userId=dbUser._id;
+
+//======Create new ACCOUNT=======
+
+    await Account.create({
+        userId,
+        balance:1+Math.random()*10000
+    })
 
     const token=jwt.sign({
         userId:dbUser._id
@@ -94,7 +104,7 @@ router.post("/signin",async (req,res)=>{
 const updateBody=zod.object({
     password:zod.string().optional(),
     firstName:zod.string().optional(),
-    lastName:zod.string().optional(),
+    lastName:zod.string().optional()
 })
 
 router.put("/",authMiddleware,async(req,res)=>{
