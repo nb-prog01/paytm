@@ -2,6 +2,7 @@ import { BottomWarning } from "../components/BottomWarning"
 import { Button } from "../components/Button"
 import { InputBox } from "../components/InputBox"
 import { SubHeading } from "../components/SubHeading"
+import { Heading } from "../components/Heading"
 
 export const Signin=()=>{
     return <div className="bg-slate-300 h-screen flex justfy-center">
