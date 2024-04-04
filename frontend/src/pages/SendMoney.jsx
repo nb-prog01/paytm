@@ -36,12 +36,14 @@ export const SendMoney=()=>{
                         placeholder="Enter amount"></input>
                     </div>
                     <button onClick={()=>{
-                        axios.post("https://localhost:3000/api/v1/account/transfer",{
+                        axios.post("http://localhost:3000/api/v1/account/transfer",{
                             to:id,
                             amount
-                        },{headers:{
-                            Authorization:"Bearer "+ localStorage.getItem("token")
-                        }})
+                        },{
+                            headers:{
+                                Authorization:"Bearer "+ localStorage.getItem("token")
+                            }
+                        })
                     }}
                     className="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-ful bg-green-500 text-white">
                         Initiate Transfer

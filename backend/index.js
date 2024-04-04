@@ -2,9 +2,9 @@ const express = require("express");
 const cors=require('cors');
 const port=3000;
 const app=express();
-
+app.use(cors({credentials:true}));
 app.use(express.json());
-app.use(cors());
+
 
 const mainRouter=require('./routes/index');
 
